@@ -12,7 +12,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 
 # Copy composer files first (for caching)
-COPY composer.json composer.lock ./
+COPY composer.json ./
 
 # Install dependencies
 RUN composer install --optimize-autoloader --no-dev --no-scripts
