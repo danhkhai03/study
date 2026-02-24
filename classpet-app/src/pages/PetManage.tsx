@@ -87,7 +87,7 @@ export default function PetManage() {
     // Upload image handler
     const handleImageUpload = async (state: string, file: File) => {
         if (!file) return;
-        
+
         setUploadingState(state);
         const formDataUpload = new FormData();
         formDataUpload.append('image', file);
@@ -98,7 +98,7 @@ export default function PetManage() {
             const res = await api.post('/upload/pet-image', formDataUpload, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
-            
+
             if (res.data.success) {
                 setFormData(prev => ({ ...prev, [state]: res.data.url }));
                 success(`Upload ảnh ${imageStates.find(s => s.key === state)?.label} thành công!`);
@@ -272,7 +272,7 @@ export default function PetManage() {
                             </div>
 
                             <h3 className="font-semibold text-gray-900 text-center">{pet.name}</h3>
-                            
+
                             <div className="mt-2 space-y-1 text-center">
                                 <p className="text-sm text-gray-500 flex items-center justify-center gap-1">
                                     <Star size={12} className="fill-yellow-400 text-yellow-400" />
@@ -288,13 +288,12 @@ export default function PetManage() {
                             {/* Images indicator */}
                             <div className="mt-2 flex justify-center gap-1">
                                 {imageStates.map(state => (
-                                    <span 
+                                    <span
                                         key={state.key}
-                                        className={`w-2 h-2 rounded-full ${
-                                            pet[state.key as keyof PetType] 
-                                                ? `bg-${state.color}-400` 
+                                        className={`w-2 h-2 rounded-full ${pet[state.key as keyof PetType]
+                                                ? `bg-${state.color}-400`
                                                 : 'bg-gray-200'
-                                        }`}
+                                            }`}
                                         title={`${state.label}: ${pet[state.key as keyof PetType] ? 'Có' : 'Không'}`}
                                     />
                                 ))}
@@ -324,7 +323,7 @@ export default function PetManage() {
                             {/* Basic Info */}
                             <div className="space-y-4">
                                 <h3 className="font-medium text-gray-800 border-b pb-2">Thông tin cơ bản</h3>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Tên loại pet *</label>
                                     <input
@@ -403,22 +402,21 @@ export default function PetManage() {
                                     <Image size={16} />
                                     Ảnh trạng thái
                                 </h3>
-                                
+
                                 <div className="grid grid-cols-1 gap-3">
                                     {imageStates.map(state => {
                                         const imageUrl = formData[state.key as keyof typeof formData] as string;
                                         const isUploading = uploadingState === state.key;
-                                        
+
                                         return (
                                             <div key={state.key} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                                                 {/* Preview */}
-                                                <div className={`w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden border-2 border-dashed ${
-                                                    imageUrl ? 'border-green-300 bg-green-50' : 'border-gray-300 bg-white'
-                                                }`}>
+                                                <div className={`w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden border-2 border-dashed ${imageUrl ? 'border-green-300 bg-green-50' : 'border-gray-300 bg-white'
+                                                    }`}>
                                                     {imageUrl ? (
-                                                        <img 
-                                                            src={getImageUrl(imageUrl)} 
-                                                            alt={state.label} 
+                                                        <img
+                                                            src={getImageUrl(imageUrl)}
+                                                            alt={state.label}
                                                             className="w-14 h-14 object-contain"
                                                         />
                                                     ) : (
@@ -431,12 +429,12 @@ export default function PetManage() {
                                                     <p className="text-sm font-medium text-gray-700">
                                                         {state.emoji} {state.label}
                                                     </p>
-                                                    
+
                                                     <div className="flex gap-2 mt-1">
                                                         <input
                                                             type="file"
                                                             accept="image/*"
-                                                            ref={el => fileInputRefs.current[state.key] = el}
+                                                            ref={el => { fileInputRefs.current[state.key] = el; }}
                                                             onChange={(e) => {
                                                                 const file = e.target.files?.[0];
                                                                 if (file) handleImageUpload(state.key, file);
@@ -447,11 +445,10 @@ export default function PetManage() {
                                                             type="button"
                                                             onClick={() => fileInputRefs.current[state.key]?.click()}
                                                             disabled={isUploading}
-                                                            className={`flex items-center gap-1 px-3 py-1 text-xs rounded-lg transition-colors ${
-                                                                isUploading
+                                                            className={`flex items-center gap-1 px-3 py-1 text-xs rounded-lg transition-colors ${isUploading
                                                                     ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
                                                                     : 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'
-                                                            }`}
+                                                                }`}
                                                         >
                                                             {isUploading ? (
                                                                 <>
@@ -464,7 +461,7 @@ export default function PetManage() {
                                                                 </>
                                                             )}
                                                         </button>
-                                                        
+
                                                         {imageUrl && (
                                                             <button
                                                                 type="button"
@@ -491,9 +488,9 @@ export default function PetManage() {
                                                 if (!imgUrl) return null;
                                                 return (
                                                     <div key={state.key} className="text-center">
-                                                        <img 
-                                                            src={getImageUrl(imgUrl)} 
-                                                            alt={state.label} 
+                                                        <img
+                                                            src={getImageUrl(imgUrl)}
+                                                            alt={state.label}
                                                             className="w-12 h-12 object-contain rounded-lg bg-white shadow"
                                                         />
                                                         <p className="text-[10px] text-gray-500 mt-1">{state.emoji}</p>
