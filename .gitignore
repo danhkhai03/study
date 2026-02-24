@@ -1,0 +1,15 @@
+# Root .gitignore
+/node_modules
+/vendor
+/.env
+/storage/*.key
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+/dist
+/tmp
+.agent/
+.gemini/
+.DS_Store
+Thumbs.db
