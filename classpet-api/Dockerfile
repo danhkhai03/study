@@ -11,17 +11,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
-# Copy composer files first (for caching)
-COPY composer.json ./
-
-# Install dependencies
-RUN composer install --optimize-autoloader --no-dev --no-scripts
-
-# Copy the rest of the application
+# Copy all project files
 COPY . .
 
-# Run post-install scripts
-RUN composer dump-autoload --optimize
+# Install dependencies
+RUN composer install --optimize-autoloader --no-dev
 
 # Create storage directories
 RUN mkdir -p storage/framework/{cache,sessions,views} storage/logs bootstrap/cache \
